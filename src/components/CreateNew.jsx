@@ -16,9 +16,9 @@ export function CreateNew({ addNew }) {
   }
 
   const handleClick = () => {
-    content.reset()
-    author.reset()
-    info.reset()
+    content.onChange('reset')
+    author.onChange('reset')
+    info.onChange('reset')
   }
 
   return (
