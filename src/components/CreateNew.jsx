@@ -15,6 +15,12 @@ export function CreateNew({ addNew }) {
     })
   }
 
+  const handleClick = () => {
+    content.reset()
+    author.reset()
+    info.reset()
+  }
+
   return (
     <div>
       <h2>create a new anecdote</h2>
@@ -29,6 +35,7 @@ export function CreateNew({ addNew }) {
           Url for more info <input {...info} />
         </div>
         <button type='submit'>Create</button>
+        <button type='button' onClick={handleClick}>Reset</button>
       </form>
     </div>
   )
