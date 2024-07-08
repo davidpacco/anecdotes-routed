@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Routes, Route, useMatch } from 'react-router-dom'
+import { Routes, Route, useMatch, useNavigate } from 'react-router-dom'
 
 import { Menu } from './components/Menu'
 import { AnecdoteList } from './components/AnecdoteList'
@@ -7,6 +7,7 @@ import { About } from './components/About'
 import { Footer } from './components/Footer'
 import { CreateNew } from './components/CreateNew'
 import { Anecdote } from './components/Anecdote'
+import { Notification } from './components/Notification'
 
 function App() {
   const [anecdotes, setAnecdotes] = useState([
@@ -18,7 +19,7 @@ function App() {
       id: 1
     },
     {
-      content: 'Premature optimization is the root of all evil',
+      content: 'Premature optimization  is the root of all evil',
       author: 'Donald Knuth',
       info: 'http://wiki.c2.com/?PrematureOptimization',
       votes: 0,
@@ -26,6 +27,7 @@ function App() {
     }
   ])
 
+  const navigate = useNavigate()
   const match = useMatch('/anecdotes/:id')
 
   const anecdote = match
@@ -37,6 +39,9 @@ function App() {
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
     setAnecdotes(anecdotes.concat(anecdote))
+    navigate('/')
+    setNotification(`A new anecdote ${anecdote.content} created!`)
+    setTimeout(() => setNotification(null), 5000)
   }
 
   const anecdoteById = (id) =>
@@ -57,6 +62,7 @@ function App() {
     <div>
       <h1>Software anecdotes</h1>
       <Menu />
+      <Notification notification={notification} />
       <Routes>
         <Route path='/' element={<AnecdoteList anecdotes={anecdotes} />} />
         <Route path='/anecdotes/:id' element={<Anecdote anecdote={anecdote} />} />
